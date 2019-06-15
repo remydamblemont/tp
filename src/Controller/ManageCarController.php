@@ -14,6 +14,7 @@ use App\Form\KindType;
 use App\Form\ModelType;
 use App\Form\VehiculeType;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,11 +23,12 @@ class ManageCarController extends AbstractController
 {
 
     private $em;
-    private $request;
+    private $paginate;
 
-    public function __construct(ObjectManager $em )
+    public function __construct(ObjectManager $em, PaginatorInterface $paginate )
     {
         $this->em = $em;
+        $this->paginate = $paginate;
     }
 
     /**
@@ -317,11 +319,16 @@ class ManageCarController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/vehicule", name="all_vehicule")
      */
-    public function allVehicule()
+    public function allVehicule(Request $request)
     {
         $vehicule = $this->em->getRepository(Vehicule::class)->findAll();
+        $pag = $this->paginate->paginate(
+            $vehicule,
+            $request->query->get('page', 1),
+            2
+        );
         return $this->render('Vehicule/vehicule.html.twig', [
-            'Vehicule' => $vehicule
+            'Vehicule' => $pag
         ]);
     }
 

@@ -7,6 +7,9 @@
 </head>
 <body>
 {% block body %}
+<div class="count">
+    NB d'objet : {{ Vehicule.getTotalItemCount }}
+</div>
 <h1 class="d-flex justify-content-center">Toutes nos Modèles :</h1><br>
 <table class="table">
     {% for inter in Vehicule %}
@@ -19,7 +22,9 @@
         </tr>
     {% endfor %}
     </thead>
-
+    <div class="navigation">
+        {{ knp_pagination_render(Vehicule) }}
+    </div>
     {% endblock %}
 {% block javascripts %}{% endblock %}
 </body>
