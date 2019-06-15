@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% block body %}
+<h1 class="d-flex justify-content-center">Toutes nos couleurs :</h1><br>
+<table class="table">
+    {% for inter in Color %}
+        <tr>
+            <th scope="row" class="text-center">{{ inter.Color }}</th>
+        </tr>
+    {% endfor %}
+    </thead>
+
+    {% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>
