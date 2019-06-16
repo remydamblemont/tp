@@ -3,36 +3,52 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('bootstrap/dist/css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
     </head>
     <body>
-        <div class="count">
-        </div>
-        <h1 class="d-flex justify-content-center">Toutes nos Modèles :</h1><br>
-        Nombre de véhicule disponible : {{ Vehicule.getTotalItemCount }}
-        <table class="table">
+        <h1>Toutes nos Modèles :</h1><br>
+        <table id="Tab" class="display" style="width:100%">
             <thead>
-            <tr>
-                <th scope="col" class="text-center">Type</th>
-                <th scope="col" class="text-center">Marque</th>
-                <th scope="col" class="text-center">Model</th>
-                <th scope="col" class="text-center">Couleur</th>
-                <th scope="col" class="text-center">NB Siège</th>
-            </tr>
-            </thead>
-            {% for inter in Vehicule %}
                 <tr>
-                    <th scope="row" class="text-center">{{ inter.kind }}</th>
-                    <th scope="row" class="text-center">{{ inter.brand }}</th>
-                    <th scope="row" class="text-center">{{ inter.model }}</th>
-                    <th scope="row" class="text-center">{{ inter.color }}</th>
-                    <th scope="row" class="text-center">{{ inter.seat }}</th>
+                    <th>Type</th>
+                    <th>Marque</th>
+                    <th>Model</th>
+                    <th>Couleur</th>
+                    <th>NB Assise</th>
                 </tr>
-            {% endfor %}
             </thead>
         </table>
-        {{ knp_pagination_render(Vehicule) }}
-        <script src="{{ asset('jquery/dist/jquery.js') }}"></script>
-        <script src="{{ asset('bootstrap/dist/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/datatables.min.js') }}"></script>
+        <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+        <script>
+            $(function() {
+                $('#Tab').DataTable({
+                    "language": {
+                        "url": "{{ asset('translate/fr.json') }}"
+                    },
+                    "processing": true,
+                    "ajax": {
+                        "url": "{{ path('request_vehicule') }}",
+                        "type": "post"
+                    },
+                    "sAjaxDataProp": "data",
+                    "pageLength": 10,
+                    "pagingType": "full_numbers",
+                    "info": false,
+                    "columns":[
+                        {"data": "Type"},
+                        {"data": "Marque",    "targets": 0 },
+                        {"data": "Model"},
+                        {"data": "Color"},
+                        {"data": "Seat"},
+
+                    ],
+                });
+            });
+        </script>
     </body>
 </html>

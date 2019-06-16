@@ -14,21 +14,23 @@ use App\Form\KindType;
 use App\Form\ModelType;
 use App\Form\VehiculeType;
 use Doctrine\Common\Persistence\ObjectManager;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+
 
 class ManageCarController extends AbstractController
 {
 
     private $em;
-    private $paginate;
+    private $serializer;
 
-    public function __construct(ObjectManager $em, PaginatorInterface $paginate )
+    public function __construct(ObjectManager $em, SerializerInterface $serializer)
     {
         $this->em = $em;
-        $this->paginate = $paginate;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -317,19 +319,31 @@ class ManageCarController extends AbstractController
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/vehicule", name="all_vehicule")
+     * @Route("/vehicule/request", name="request_vehicule")
      */
-    public function allVehicule(Request $request)
+    public function requestVehicule()
     {
         $vehicule = $this->em->getRepository(Vehicule::class)->findAll();
-        $pag = $this->paginate->paginate(
-            $vehicule,
-            $request->query->get('page', 1),
-            2
-        );
-        return $this->render('Vehicule/vehicule.html.twig', [
-            'Vehicule' => $pag
-        ]);
+        foreach ($vehicule as $vehicules) {
+                $output['data'][] = [
+                'Type' => $vehicules->getKind()->getType(),
+                'Marque' => $vehicules->getBrand()->getName(),
+                'Model' => $vehicules->getModel()->getName(),
+                'Color' => $vehicules->getColor()->getColor(),
+                'Seat' => $vehicules->getSeat(),
+            ];
+        }
+        $data = $this->serializer->serialize($output, 'json');
+        return new Response($data, 200, ['Content-Type' => 'application/json']);
+    }
+
+    /**
+     * @return Response
+     * @Route("/vehicule", name="all_vehicule")
+     */
+    public function allVehicule()
+    {
+        return $this->render('Vehicule/vehicule.html.twig', []);
     }
 
     /**
