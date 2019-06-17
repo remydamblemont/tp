@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
-</head>
-<body>
-{% block body %}
-<h1 class="d-flex justify-content-center">Toutes nos Marques :</h1><br>
-<table class="table">
-    {% for inter in Brand %}
-        <tr>
-            <th scope="row" class="text-center">{{ inter.Name }}</th>
-        </tr>
-    {% endfor %}
-    </thead>
-
-    {% endblock %}
-{% block javascripts %}{% endblock %}
-</body>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Nos Marques</title>
+    </head>
+    <body>
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            {{ flashMessage }}
+        {% endfor %}
+        <h1 class="d-flex justify-content-center">Toutes nos Marques :</h1><br>
+        <table class="table">
+            {% for inter in Brand %}
+                <tr>
+                    <th scope="row" class="text-center">{{ inter.Name }}</th>
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
 </html>

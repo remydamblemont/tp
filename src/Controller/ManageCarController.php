@@ -17,6 +17,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -74,16 +75,22 @@ class ManageCarController extends AbstractController
     public function updateKind(Request $request, $id)
     {
         $ressource = $this->em->getRepository(Kind::class)->find($id);
-        $form = $this->get('form.factory')->create(KindType::class, $ressource);
-        if($request->isMethod('POST') && $form->handleRequest($request))
+        if($ressource !== null)
         {
-            $this->em->persist($ressource);
-            $this->em->flush();
+            $form = $this->get('form.factory')->create(KindType::class, $ressource);
+            if($request->isMethod('POST') && $form->handleRequest($request))
+            {
+                $this->em->persist($ressource);
+                $this->em->flush();
+                return $this->redirectToRoute('all_kind');
+            }
+            return $this->render('Kind/updateKind.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        } else {
+            $this->addFlash('error', 'La ressource n\'a pas été mise à jour car elle n\'existe pas');
             return $this->redirectToRoute('all_kind');
         }
-        return $this->render('Kind/updateKind.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
     /**
@@ -95,9 +102,15 @@ class ManageCarController extends AbstractController
     public function deleteKind(Request $request, $id)
     {
         $ressource = $this->em->getRepository(Kind::class)->find($id);
-        $this->em->remove($ressource);
-        $this->em->flush();
-        return $this->redirectToRoute('all_kind');
+        if($ressource !== null)
+        {
+            $this->em->remove($ressource);
+            $this->em->flush();
+            return $this->redirectToRoute('all_kind');
+        } else {
+            $this->addFlash('error', 'La ressource n\'a pas été supprimé car elle n\'existe pas');
+            return $this->redirectToRoute('all_kind');
+        }
     }
 
     /**
@@ -140,16 +153,22 @@ class ManageCarController extends AbstractController
     public function updateColor(Request $request, $id)
     {
         $color = $this->em->getRepository(ColorVehicule::class)->find($id);
-        $form = $this->get('form.factory')->create(ColorVehiculeType::class, $color);
-        if($request->isMethod('POST') && $form->handleRequest($request))
+        if($color !== null)
         {
-            $this->em->persist($color);
-            $this->em->flush();
+            $form = $this->get('form.factory')->create(ColorVehiculeType::class, $color);
+            if($request->isMethod('POST') && $form->handleRequest($request))
+            {
+                $this->em->persist($color);
+                $this->em->flush();
+                return $this->redirectToRoute('all_color');
+            }
+            return $this->render('Color/updateColor.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        } else {
+            $this->addFlash('error', 'La ressource n\'a pas été mise à jour car elle n\'existe pas');
             return $this->redirectToRoute('all_color');
         }
-        return $this->render('Color/updateColor.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
     /**
@@ -161,9 +180,15 @@ class ManageCarController extends AbstractController
     public function deleteColor(Request $request, $id)
     {
         $color = $this->em->getRepository(ColorVehicule::class)->find($id);
-        $this->em->remove($color);
-        $this->em->flush();
-        return $this->redirectToRoute('all_color');
+        if($color !== null)
+        {
+            $this->em->remove($color);
+            $this->em->flush();
+            return $this->redirectToRoute('all_color');
+        } else {
+            $this->addFlash('error', 'La ressource n\'a pas été supprimé car elle n\'existe pas');
+            return $this->redirectToRoute('all_color');
+        }
     }
 
     /**
@@ -206,16 +231,22 @@ class ManageCarController extends AbstractController
     public function updateModel(Request $request, $id)
     {
         $model = $this->em->getRepository(ModelVehicule::class)->find($id);
-        $form = $this->get('form.factory')->create(ModelType::class, $model);
-        if($request->isMethod('POST') && $form->handleRequest($request))
+        if($model !== null)
         {
-            $this->em->persist($model);
-            $this->em->flush();
+            $form = $this->get('form.factory')->create(ModelType::class, $model);
+            if($request->isMethod('POST') && $form->handleRequest($request))
+            {
+                $this->em->persist($model);
+                $this->em->flush();
+                return $this->redirectToRoute('all_model');
+            }
+            return $this->render('Model/updateModel.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        } else {
+            $this->addFlash('error', 'La ressource n\'a pas été mise à jour car elle n\'existe pas');
             return $this->redirectToRoute('all_model');
         }
-        return $this->render('Model/updateModel.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
     /**
@@ -227,9 +258,15 @@ class ManageCarController extends AbstractController
     public function deleteModel(Request $request, $id)
     {
         $model = $this->em->getRepository(ModelVehicule::class)->find($id);
-        $this->em->remove($model);
-        $this->em->flush();
-        return $this->redirectToRoute('all_model');
+        if($model !== null)
+        {
+            $this->em->remove($model);
+            $this->em->flush();
+            return $this->redirectToRoute('all_model');
+        } else {
+            $this->addFlash('error', 'La ressource n\'a pas été supprimé car elle n\'existe pas');
+            return $this->redirectToRoute('all_model');
+        }
     }
 
     /**
@@ -272,16 +309,22 @@ class ManageCarController extends AbstractController
     public function updateBrand(Request $request, $id)
     {
         $brand = $this->em->getRepository(BrandVehicule::class)->find($id);
-        $form = $this->get('form.factory')->create(BrandType::class, $brand);
-        if($request->isMethod('POST') && $form->handleRequest($request))
+        if($brand !== null)
         {
-            $this->em->persist($brand);
-            $this->em->flush();
+            $form = $this->get('form.factory')->create(BrandType::class, $brand);
+            if($request->isMethod('POST') && $form->handleRequest($request))
+            {
+                $this->em->persist($brand);
+                $this->em->flush();
+                return $this->redirectToRoute('all_brand');
+            }
+            return $this->render('Brand/updateBrand.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        } else {
+            $this->addFlash('error', 'La ressource n\'a pas été mise à jour car elle n\'existe pas');
             return $this->redirectToRoute('all_brand');
         }
-        return $this->render('Brand/updateBrand.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
     /**
@@ -293,9 +336,15 @@ class ManageCarController extends AbstractController
     public function deleteBrand(Request $request, $id)
     {
         $brand = $this->em->getRepository(BrandVehicule::class)->find($id);
-        $this->em->remove($brand);
-        $this->em->flush();
-        return $this->redirectToRoute('all_brand');
+        if($brand !== null)
+        {
+            $this->em->remove($brand);
+            $this->em->flush();
+            return $this->redirectToRoute('all_brand');
+        } else {
+            $this->addFlash('error', 'La ressource n\'a pas été supprimé car elle n\'existe pas');
+            return $this->redirectToRoute('all_brand');
+        }
     }
 
     /**
@@ -303,7 +352,7 @@ class ManageCarController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/vehicule/create", name="create_vehicule")
      */
-    public function createCar(Request $request)
+    public function createVehicule(Request $request)
     {
         $vehicule = new Vehicule();
         $form = $this->get('form.factory')->create(VehiculeType::class, $vehicule);
@@ -355,16 +404,23 @@ class ManageCarController extends AbstractController
     public function updateVehicule(Request $request, $id)
     {
         $vehicule = $this->em->getRepository(Vehicule::class)->find($id);
-        $form = $this->get('form.factory')->create(VehiculeType::class, $vehicule);
-        if($request->isMethod('POST') && $form->handleRequest($request))
+        if($vehicule !== null)
         {
-            $this->em->persist($vehicule);
-            $this->em->flush();
+            $form = $this->get('form.factory')->create(VehiculeType::class, $vehicule);
+            if($request->isMethod('POST') && $form->handleRequest($request))
+            {
+                $this->em->persist($vehicule);
+                $this->em->flush();
+                return $this->redirectToRoute('all_vehicule');
+            }
+            return $this->render('Vehicule/updateVehicule.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        } else {
+            $this->addFlash('error', 'La ressource n\'a pas été mise à jour car elle n\'existe pas');
             return $this->redirectToRoute('all_vehicule');
         }
-        return $this->render('Vehicule/updateVehicule.html.twig', [
-            'form' => $form->createView(),
-        ]);
+
     }
 
     /**
@@ -376,9 +432,14 @@ class ManageCarController extends AbstractController
     public function deleteVehicule(Request $request, $id)
     {
         $vehicule = $this->em->getRepository(Vehicule::class)->find($id);
-        $this->em->remove($vehicule);
-        $this->em->flush();
-        return $this->redirectToRoute('all_vehicule');
-
+        if($vehicule !== null)
+        {
+            $this->em->remove($vehicule);
+            $this->em->flush();
+            return $this->redirectToRoute('all_vehicule');
+        } else {
+            $this->addFlash('error', 'La ressource n\'a pas été supprimé car elle n\'existe pas');
+            return $this->redirectToRoute('all_vehicule');
+        }
     }
 }

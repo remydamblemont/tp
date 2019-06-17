@@ -1,17 +1,11 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
-</head>
-<body>
-{% block body %}
-
-    {{ form_start(form) }}
-    {{ form_end(form) }}
-
-    {% endblock %}
-{% block javascripts %}{% endblock %}
-</body>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>MAJ Type</title>
+    </head>
+    <body>
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+    </body>
 </html>

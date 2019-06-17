@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>Nos véhicules</title>
         <link rel="stylesheet" href="{{ asset('css/datatables.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
     </head>
     <body>
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            {{ flashMessage }}
+        {% endfor %}
         <h1>Toutes nos Modèles :</h1><br>
         <table id="Tab" class="display" style="width:100%">
             <thead>
@@ -38,14 +41,12 @@
                     "sAjaxDataProp": "data",
                     "pageLength": 10,
                     "pagingType": "full_numbers",
-                    "info": false,
                     "columns":[
                         {"data": "Type"},
-                        {"data": "Marque",    "targets": 0 },
+                        {"data": "Marque"},
                         {"data": "Model"},
                         {"data": "Color"},
                         {"data": "Seat"},
-
                     ],
                 });
             });
