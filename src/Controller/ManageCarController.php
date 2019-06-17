@@ -14,6 +14,7 @@ use App\Form\KindType;
 use App\Form\ModelType;
 use App\Form\VehiculeType;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\DataTables\Builder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -372,9 +373,9 @@ class ManageCarController extends AbstractController
      */
     public function requestVehicule()
     {
-        $vehicule = $this->em->getRepository(Vehicule::class)->findAll();
+        $vehicule = $this->em->getRepository(Vehicule::class)->search();
         foreach ($vehicule as $vehicules) {
-                $output['data'][] = [
+            $output['data'][] = [
                 'Type' => $vehicules->getKind()->getType(),
                 'Marque' => $vehicules->getBrand()->getName(),
                 'Model' => $vehicules->getModel()->getName(),

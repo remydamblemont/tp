@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Vehicule;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +18,15 @@ class VehiculeRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Vehicule::class);
+    }
+
+    public function search($page = 0, $max = NULL)
+    {
+        $pag = $this->createQueryBuilder('v')
+            ->setFirstResult($page)
+            ->setFirstResult($page * $max)
+            ;
+        return new Paginator($pag);
     }
 
     // /**
