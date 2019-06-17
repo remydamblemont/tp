@@ -15,6 +15,7 @@ use App\Form\ModelType;
 use App\Form\VehiculeType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DataTables\Builder;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -371,20 +372,23 @@ class ManageCarController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/vehicule/request", name="request_vehicule")
      */
-    public function requestVehicule()
+    public function requestVehicule(Request $request)
     {
-        $vehicule = $this->em->getRepository(Vehicule::class)->search();
-        foreach ($vehicule as $vehicules) {
-            $output['data'][] = [
-                'Type' => $vehicules->getKind()->getType(),
-                'Marque' => $vehicules->getBrand()->getName(),
-                'Model' => $vehicules->getModel()->getName(),
-                'Color' => $vehicules->getColor()->getColor(),
-                'Seat' => $vehicules->getSeat(),
-            ];
+        if ($request->isXmlHttpRequest())
+        {
+            $vehicule = $this->em->getRepository(Vehicule::class)->search();
+            foreach ($vehicule as $vehicules) {
+                $output['data'][] = [
+                    'Type' => $vehicules->getKind()->getType(),
+                    'Marque' => $vehicules->getBrand()->getName(),
+                    'Model' => $vehicules->getModel()->getName(),
+                    'Color' => $vehicules->getColor()->getColor(),
+                    'Seat' => $vehicules->getSeat(),
+                ];
+            }
+            $data = $this->serializer->serialize($output, 'json');
+            return new Response($data, 200, ['Content-Type' => 'application/json']);
         }
-        $data = $this->serializer->serialize($output, 'json');
-        return new Response($data, 200, ['Content-Type' => 'application/json']);
     }
 
     /**
