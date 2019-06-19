@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+    db:
+        image: postgres:11.2-alpine
+        container_name: db
+        environment:
+          - POSTGRES_DB=test
+          - POSTGRES_USER=admin
+          - POSTGRES_PASSWORD=Kalitics
+        volumes:
+          - /home/Docker/Kalitics/Db:/var/lib/postgresql/data:rw
+        ports:
+          - "5432:5432"
+    php:
+        build: Php/.
+        container_name: php
+        volumes:
+            - /home/Docker/Kalitics/Php/html:/var/www/html/:rw,cached
+        ports:
+            - "8000:8000"
+        links:
+            - db
