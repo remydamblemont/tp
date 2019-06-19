@@ -52,6 +52,16 @@ class Vehicule
      */
     private $Color;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $Created;
+
+    public function __construct()
+    {
+        $this->Created = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -113,6 +123,18 @@ class Vehicule
     public function setColor(?ColorVehicule $Color): self
     {
         $this->Color = $Color;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->Created;
+    }
+
+    public function setCreated(\DateTimeInterface $Created): self
+    {
+        $this->Created = $Created;
 
         return $this;
     }

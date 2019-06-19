@@ -20,6 +20,7 @@
                     <th>Model</th>
                     <th>Couleur</th>
                     <th>NB Assise</th>
+                    <th>Date de création</th>
                 </tr>
             </thead>
         </table>
@@ -34,8 +35,6 @@
                         "url": "{{ asset('translate/fr.json') }}"
                     },
                     "processing": true,
-                    "serverSide": true,
-                    "paging": false,
                     "ajax": {
                         "url": "{{ path('request_vehicule') }}",
                         "type": "post"
@@ -49,6 +48,7 @@
                         {"data": "Model"},
                         {"data": "Color"},
                         {"data": "Seat"},
+                        {"data": "Created"},
                     ],
                 });
             });

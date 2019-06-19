@@ -14,12 +14,9 @@ use App\Form\KindType;
 use App\Form\ModelType;
 use App\Form\VehiculeType;
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\DataTables\Builder;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -51,7 +48,7 @@ class ManageCarController extends AbstractController
             return $this->redirectToRoute('all_kind');
         }
 
-        return $this->render('base.html.twig', [
+        return $this->render('Kind/createKind.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -378,12 +375,14 @@ class ManageCarController extends AbstractController
         {
             $vehicule = $this->em->getRepository(Vehicule::class)->search();
             foreach ($vehicule as $vehicules) {
+                $date = $vehicules->getCreated()->format('d-m-Y');
                 $output['data'][] = [
                     'Type' => $vehicules->getKind()->getType(),
                     'Marque' => $vehicules->getBrand()->getName(),
                     'Model' => $vehicules->getModel()->getName(),
                     'Color' => $vehicules->getColor()->getColor(),
                     'Seat' => $vehicules->getSeat(),
+                    'Created' => $date,
                 ];
             }
             $data = $this->serializer->serialize($output, 'json');
