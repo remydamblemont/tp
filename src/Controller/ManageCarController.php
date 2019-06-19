@@ -376,6 +376,9 @@ class ManageCarController extends AbstractController
             $vehicule = $this->em->getRepository(Vehicule::class)->search();
             foreach ($vehicule as $vehicules) {
                 $date = $vehicules->getCreated()->format('d-m-Y');
+                $id = $vehicules->getId();
+                $update = $this->generateUrl('update_vehicule', ['id' => $id]);
+                $delete = $this->generateUrl('delete_vehicule', ['id' => $id]);
                 $output['data'][] = [
                     'Type' => $vehicules->getKind()->getType(),
                     'Marque' => $vehicules->getBrand()->getName(),
@@ -383,6 +386,8 @@ class ManageCarController extends AbstractController
                     'Color' => $vehicules->getColor()->getColor(),
                     'Seat' => $vehicules->getSeat(),
                     'Created' => $date,
+                    'Update' => $update,
+                    'Delete' => $delete,
                 ];
             }
             $data = $this->serializer->serialize($output, 'json');

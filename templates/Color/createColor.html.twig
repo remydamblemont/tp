@@ -5,8 +5,10 @@
         <title>Création d'une couleur</title>
     </head>
     <body>
-        {% block body %}
-            {{ form(form) }}
-        {% endblock %}
+        {{ form_start(form) }}
+        <p>
+            {{ form_row(form.Color) }}
+        </p>
+        {{ form_end(form) }}
     </body>
 </html>

@@ -11,6 +11,7 @@
         {% for flashMessage in app.session.flashbag.get('error') %}
             {{ flashMessage }}
         {% endfor %}
+        <a href="{{ path('create_vehicule') }}">Ajouter un vehicule</a>
         <h1>Toutes nos Modèles :</h1><br>
         <table id="Tab" class="display" style="width:100%">
             <thead>
@@ -21,6 +22,8 @@
                     <th>Couleur</th>
                     <th>NB Assise</th>
                     <th>Date de création</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
         </table>
@@ -49,6 +52,16 @@
                         {"data": "Color"},
                         {"data": "Seat"},
                         {"data": "Created"},
+                        { "data": "Update", "name": "Update",
+                            fnCreatedCell: function (nTd, sData, oData) {
+                                $(nTd).html("<a href="+oData.Update+">Modifier</a>");
+                            }
+                        },
+                        { "data": "Delete", "name": "Delete",
+                            fnCreatedCell: function (nTd, sData, oData) {
+                                $(nTd).html("<a href="+oData.Delete+">Supprimer</a>");
+                            }
+                        },
                     ],
                 });
             });

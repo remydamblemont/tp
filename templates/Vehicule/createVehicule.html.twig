@@ -5,6 +5,14 @@
         <title>Création d'un véhicules</title>
     </head>
     <body>
-        {{ form(form) }}
+    {{ form_start(form) }}
+    <p>
+        {{ form_row(form.Kind) }} <br>
+        {{ form_row(form.Brand) }} <br>
+        {{ form_row(form.Model) }} <br>
+        {{ form_row(form.Color) }} <br>
+        {{ form_row(form.Seat) }} <br>
+    </p>
+    {{ form_end(form) }}
     </body>
 </html>

@@ -5,6 +5,10 @@
         <title>Création d'un model</title>
     </head>
     <body>
-            {{ form(form) }}
+        {{ form_start(form) }}
+        <p>
+            {{ form_row(form.Name) }}
+        </p>
+        {{ form_end(form) }}
     </body>
 </html>

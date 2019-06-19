@@ -2,9 +2,13 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>Création d'un véhicules</title>
+        <title>Création d'un type</title>
     </head>
     <body>
-        {{ form(form) }}
+        {{ form_start(form) }}
+        <p>
+            {{ form_row(form.Type) }}
+        </p>
+        {{ form_end(form) }}
     </body>
 </html>

@@ -5,9 +5,10 @@
         <title>MAJ Marque</title>
     </head>
     <body>
-        {% block body %}
-            {{ form_start(form) }}
-            {{ form_end(form) }}
-        {% endblock %}
+        {{ form_start(form) }}
+        <p>
+            {{ form_row(form.Name) }}
+        </p>
+        {{ form_end(form) }}
     </body>
 </html>

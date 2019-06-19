@@ -8,11 +8,12 @@
         {% for flashMessage in app.session.flashbag.get('error') %}
             {{ flashMessage }}
         {% endfor %}
-        <h1 class="d-flex justify-content-center">Toutes nos Marques :</h1><br>
-        <table class="table">
+        <h1>Toutes nos Marques :</h1><br>
+        <a href="{{ path('create_brand') }}">Création d'une marque</a>
+        <table>
             {% for inter in Brand %}
                 <tr>
-                    <th scope="row" class="text-center">{{ inter.Name }}</th>
+                    <th>{{ inter.Name }} <a href="{{ path('update_brand', {'id': inter.id}) }}"> Modifier</a> <a href="{{ path('delete_brand', {'id': inter.id}) }}">Supprimer</a></th>
                 </tr>
             {% endfor %}
         </table>

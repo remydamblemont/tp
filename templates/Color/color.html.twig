@@ -8,11 +8,12 @@
         {% for flashMessage in app.session.flashbag.get('error') %}
             {{ flashMessage }}
         {% endfor %}
-        <h1 class="d-flex justify-content-center">Toutes nos couleurs :</h1><br>
-        <table class="table">
+        <h1>Toutes nos couleurs :</h1><br>
+        <table>
+            <a href="{{ path('all_color') }}">Créer une nouvelle couleur</a>
             {% for inter in Color %}
                 <tr>
-                    <th scope="row" class="text-center">{{ inter.Color }}</th>
+                    <th>{{ inter.Color }} <a href="{{ path('update_color', {'id': inter.id}) }}">Modifier</a> <a href="{{ path('delete_color', {'id': inter.id }) }}">Supprimer</a></th>
                 </tr>
             {% endfor %}
             </table>
