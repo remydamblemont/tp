@@ -10,7 +10,7 @@
         {% endfor %}
         <h1>Toutes nos couleurs :</h1><br>
         <table>
-            <a href="{{ path('all_color') }}">Créer une nouvelle couleur</a>
+            <a href="{{ path('create_color') }}">Créer une nouvelle couleur</a>
             {% for inter in Color %}
                 <tr>
                     <th>{{ inter.Color }} <a href="{{ path('update_color', {'id': inter.id}) }}">Modifier</a> <a href="{{ path('delete_color', {'id': inter.id }) }}">Supprimer</a></th>

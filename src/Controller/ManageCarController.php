@@ -373,7 +373,7 @@ class ManageCarController extends AbstractController
     {
         if ($request->isXmlHttpRequest())
         {
-            $vehicule = $this->em->getRepository(Vehicule::class)->search();
+            $vehicule = $this->em->getRepository(Vehicule::class)->findAll();
             foreach ($vehicule as $vehicules) {
                 $date = $vehicules->getCreated()->format('d-m-Y');
                 $id = $vehicules->getId();

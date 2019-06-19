@@ -20,16 +20,7 @@ class VehiculeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Vehicule::class);
     }
-
-    public function search($page = 0, $max = 2)
-    {
-        $pag = $this->createQueryBuilder('v')
-            ->setFirstResult($page)
-            ->setFirstResult($page * $max)
-            ;
-        return new Paginator($pag);
-    }
-
+    
     // /**
     //  * @return Vehicule[] Returns an array of Vehicule objects
     //  */
